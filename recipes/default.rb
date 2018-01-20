@@ -16,4 +16,6 @@ yum_repository 'microsoft' do
   description 'packages-microsoft-com-prod'
 end
 
-package 'powershell'
+package 'powershell' do
+  action :upgrade
+end

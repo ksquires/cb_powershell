@@ -22,7 +22,12 @@ describe 'cb_powershell::default' do
           runner.converge(described_recipe)
         end
 
-        it 'creates installs gpg key' do
+        before(:each) do
+          stub_command('rpm -qi gpg-pubkey-be1229cf-*').and_return(false)
+        end
+
+
+        it 'installs gpg key' do
           # soething stub
         end
         it 'creates microsoft repo with proper info' do
@@ -31,8 +36,8 @@ describe 'cb_powershell::default' do
           expect(chef_run).to create_yum_repository('microsoft').with(enabled: true)
         end
 
-        it 'installs powershell package' do
-          expect(chef_run).to install_package('powershell')
+        it 'upgrades powershell package' do
+          expect(chef_run).to upgrade_package('powershell')
         end
 
         it 'converges successfully' do
